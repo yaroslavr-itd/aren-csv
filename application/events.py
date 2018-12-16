@@ -56,4 +56,4 @@ def get_upcoming_events(timestamp=None):
 
     return [
         event for event in get_all_events() if datetime.datetime.strptime(
-            event.start_date_time, '%Y-%m-%d %H:%M:%S') > datetime.datetime.fromtimestamp(timestamp)]
+            event.start_date_time, '%m/%d/%Y %H:%M') > datetime.datetime.fromtimestamp(timestamp)]
