@@ -12,8 +12,7 @@ class EventJSONEncoder(flask.json.JSONEncoder):
 
 
 def file_changed_handler(path_to_file):
-    upcoming_events = application.events.get_upcoming_events(path_to_file)
-    application.socketio_api.SOCKETIO_APP.emit('upcoming events', upcoming_events, broadcast=True)
+    application.events.ACTUAL_EVENTS = application.events.read_events(path_to_file)
 
 
 def create_app():

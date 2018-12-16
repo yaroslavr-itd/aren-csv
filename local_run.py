@@ -8,4 +8,4 @@ DEBUG = os.getenv('ARENCSV_DEBUG', True)
 
 APP = aren_csv_app.create_app()
 
-APP.run(aren_csv_app.FLASK_APP, HOST, PORT, debug=DEBUG)
+APP.run(host=HOST, port=PORT, debug=DEBUG)

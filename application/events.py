@@ -43,11 +43,17 @@ def read_events(path):
         return Event.make_events([row for row in reader])
 
 
-def get_all_events(path):
-    return read_events(path)
+ACTUAL_EVENTS = read_events(PATH_TO_EVENTS_FILE)
 
 
-def get_upcoming_events(path):
+def get_all_events():
+    return ACTUAL_EVENTS
+
+
+def get_upcoming_events(timestamp=None):
+    if timestamp is None:
+        timestamp = int(datetime.datetime.now().timestamp())
+
     return [
-        event for event in get_all_events(path) if datetime.datetime.strptime(
-            event.start_date_time, '%Y-%m-%d %H:%M:%S') > datetime.datetime.now()]
+        event for event in get_all_events() if datetime.datetime.strptime(
+            event.start_date_time, '%Y-%m-%d %H:%M:%S') > datetime.datetime.fromtimestamp(timestamp)]
