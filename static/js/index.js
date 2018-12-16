@@ -1,5 +1,3 @@
-var socket = io.connect('http://' + document.domain + ':' + location.port);
-
 var clearTable = function(tableBody) {
   var itemsCount = tableBody.getElementsByTagName("tr").length;
   for(let i = 0; i < itemsCount; i++) {
@@ -30,8 +28,7 @@ var updateTable = function(data) {
   });
 };
 
-socket.on('upcoming events', updateTable);
 
 window.addEventListener('load', function() {
-  socket.emit('upcoming events');
+  // socket.emit('upcoming events');
 });
