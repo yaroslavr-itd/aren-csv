@@ -1,3 +1,7 @@
+body {
+  background: #005095;
+}
+
 .header-style {
   position: relative;
   box-shadow: 0px 4px 5px #24292c;
@@ -11,6 +15,10 @@
   color: white;
   background: #005095;
   width: auto;
+}
+
+.table-row-style {
+  font-size: large;
 }
 
 .table tbody td {
