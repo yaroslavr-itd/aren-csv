@@ -1,5 +1,18 @@
 const upcomingEventsURL = "http://" + document.domain + ":" + location.port + "/upcoming_events";
 
+let convertDate = function(dateSting) {
+    let dateTime = new Date(dateSting);
+    let options = {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour12: true,
+        hour: "numeric",
+        minute: "numeric" };
+
+    return dateTime.toLocaleString("en-US", options)
+};
+
 let getUpcomingEvents = function() {
   const timestamp = parseInt(new Date().getTime() / 1000);
   const httpRequest = new XMLHttpRequest();
@@ -35,8 +48,8 @@ let updateTable = function(data) {
     let roomCell = row.insertCell(2);
     let eventCell = row.insertCell(3);
 
-    startCell.innerHTML = event['start_date_time'];
-    endCell.innerHTML = event['end_date_time'];
+    startCell.innerHTML = convertDate(event['start_date_time']);
+    endCell.innerHTML = convertDate(event['end_date_time']);
     roomCell.innerHTML = event['facility_title'];
     eventCell.innerHTML = event['event_name'];
   });
