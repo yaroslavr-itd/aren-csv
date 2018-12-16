@@ -38,9 +38,12 @@ class Event:
 
 
 def read_events(path):
-    with open(path, 'r', encoding='utf-8') as file:
-        reader = csv.DictReader(file, delimiter=',', restkey='rest')
-        return Event.make_events([row for row in reader])
+    try:
+        with open(path, 'r', encoding='utf-8') as file:
+            reader = csv.DictReader(file, delimiter=',', restkey='rest')
+            return Event.make_events([row for row in reader])
+    except FileNotFoundError:
+        return []
 
 
 ACTUAL_EVENTS = read_events(PATH_TO_EVENTS_FILE)
