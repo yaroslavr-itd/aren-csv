@@ -14,14 +14,11 @@ var initialLoad = true;
 let convertDate = function(dateSting) {
     let dateTime = new Date(dateSting);
     let options = {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
         hour12: true,
         hour: "numeric",
         minute: "numeric" };
 
-    return dateTime.toLocaleString("en-US", options)
+    return dateTime.toLocaleString("en-CA", options)
 };
 
 let getUpcomingEvents = function() {
