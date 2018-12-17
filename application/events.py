@@ -20,10 +20,20 @@ class Event:
         self.booking_type_id = booking_type_id
         self.facility_master_title = facility_master_title
         self.facility_title = facility_title
-        self.event_name = event_name
+        self.event_name = Event.remove_excessive_text(
+            event_name, ['2018-2019', '2017-2019', '2018', '2017', ' QE '])
         self.function_title = function_title
         self.activity_title = activity_title
         self.booking_notes = booking_notes
+
+    @staticmethod
+    def remove_excessive_text(string, excessive=None):
+        if excessive is None:
+            return string
+
+        for text in excessive:
+            string = string.replace(text, '')
+        return string
 
     @classmethod
     def make_event(cls, **kwargs):
@@ -53,10 +63,15 @@ def get_all_events():
     return ACTUAL_EVENTS
 
 
-def get_upcoming_events(timestamp=None):
+def get_upcoming_events(timestamp=None, skip_incomplete=True):
     if timestamp is None:
         timestamp = int(datetime.datetime.now().timestamp())
 
-    return [
-        event for event in get_all_events() if datetime.datetime.strptime(
+    upcoming_events = [
+        event for event in get_all_events() if event.booking_type_id == 'R' and datetime.datetime.strptime(
             event.start_date_time, '%Y-%m-%d %H:%M:%S') > datetime.datetime.fromtimestamp(timestamp)]
+
+    upcoming_events.sort(key=lambda event: datetime.datetime.strptime(
+        event.start_date_time, '%Y-%m-%d %H:%M:%S'))
+
+    return upcoming_events
