@@ -37,9 +37,17 @@ let updateTable = function(data) {
     return;
   }
 
-  let tableBody = document.getElementById(
-    "event-table").getElementsByTagName("tbody")[0];
+  let table = document.getElementById("event-table");
+  let tableBody = table.getElementsByTagName("tbody")[0];
+
   clearTable(tableBody);
+
+  if (data.length === 0) {
+    showNoUpcomingMessage(table);
+    return;
+  }
+
+  hideNoUpcomingMessage(table);
 
   data.forEach(function(event) {
     let row = tableBody.insertRow(-1);
@@ -53,6 +61,18 @@ let updateTable = function(data) {
     roomCell.innerHTML = event['facility_title'];
     eventCell.innerHTML = event['event_name'];
   });
+};
+
+let showNoUpcomingMessage = function(tableBody) {
+  tableBody.style.visibility = "hidden";
+  let message = document.getElementById("noUpcomingMessage");
+  message.style.visibility = "visible";
+};
+
+let hideNoUpcomingMessage = function(tableBody) {
+  tableBody.style.visibility = "visible";
+  let message = document.getElementById("noUpcomingMessage");
+  message.style.visibility = "hidden";
 };
 
 window.addEventListener('load', function() {

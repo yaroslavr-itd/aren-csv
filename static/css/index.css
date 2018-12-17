@@ -21,6 +21,11 @@ body {
   font-size: x-large;
 }
 
+.message-style {
+  color: white;
+  font-size: xx-large;
+}
+
 .table tbody td {
   border: none;
 }
