@@ -11,14 +11,14 @@ let tableBody = null;
 
 var initialLoad = true;
 
-let convertDate = function(dateSting) {
-    let dateTime = new Date(dateSting);
-    let options = {
-        hour12: true,
-        hour: "numeric",
-        minute: "numeric" };
-
-    return dateTime.toLocaleString("en-CA", options)
+let convertTime = function(timeString) {
+    let lower = timeString.toLowerCase();
+    if (lower.includes("am")) {
+      return lower.replace("am", "a.m.");
+    }
+    else if (lower.includes("pm")) {
+      return lower.replace("pm", "p.m.");
+    }
 };
 
 let getUpcomingEvents = function() {
@@ -72,8 +72,8 @@ let updateTable = function() {
     let roomCell = row.insertCell(2);
     let eventCell = row.insertCell(3);
 
-    startCell.innerHTML = convertDate(upcomingEvents[i]['start_date_time']);
-    endCell.innerHTML = convertDate(upcomingEvents[i]['end_date_time']);
+    startCell.innerHTML = convertTime(upcomingEvents[i]['booking_start_time']);
+    endCell.innerHTML = convertTime(upcomingEvents[i]['booking_end_time']);
     roomCell.innerHTML = upcomingEvents[i]['facility_title'];
     eventCell.innerHTML = upcomingEvents[i]['event_name'] === null || upcomingEvents[i]['event_name'] === "" ?
                             upcomingEvents[i]['facility_title'] : upcomingEvents[i]['event_name'];

@@ -29,3 +29,13 @@ body {
 .table tbody td {
   border: none;
 }
+
+h1.thick {
+  font-weight: 900;
+  font-size: 55px;
+}
+
+h3.thick {
+  font-weight: 900;
+  font-size: 35px;
+}
