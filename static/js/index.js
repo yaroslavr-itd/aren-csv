@@ -1,4 +1,15 @@
 const upcomingEventsURL = "http://" + document.domain + ":" + location.port + "/upcoming_events";
+const requestTimeout = 12000;
+
+var upcomingEvents;
+var currentIndex = 0;
+var recordsPerPage = 8;
+const pagingTimeout = 5000;
+
+let table = null;
+let tableBody = null;
+
+var initialLoad = true;
 
 let convertDate = function(dateSting) {
     let dateTime = new Date(dateSting);
@@ -20,7 +31,11 @@ let getUpcomingEvents = function() {
   httpRequest.send();
   httpRequest.onreadystatechange = function() {
     if (this.readyState === 4 && this.status === 200) {
-      updateTable(JSON.parse(httpRequest.responseText));
+      upcomingEvents = JSON.parse(httpRequest.responseText);
+      if (initialLoad) {
+        updateTable();
+        initialLoad = false;
+      }
     }
   }
 };
@@ -32,35 +47,40 @@ let clearTable = function(tableBody) {
   }
 };
 
-let updateTable = function(data) {
-  if (data === undefined) {
+let updateTable = function() {
+  if (upcomingEvents === undefined) {
     return;
   }
 
-  let table = document.getElementById("event-table");
-  let tableBody = table.getElementsByTagName("tbody")[0];
-
   clearTable(tableBody);
 
-  if (data.length === 0) {
+  if (upcomingEvents.length === 0) {
     showNoUpcomingMessage(table);
+    currentIndex = 0;
     return;
   }
 
   hideNoUpcomingMessage(table);
 
-  data.forEach(function(event) {
+  if (currentIndex >= upcomingEvents.length) {
+    currentIndex = 0;
+  }
+  let remainingRecords = upcomingEvents.length - currentIndex;
+  let stopIndex = remainingRecords >= recordsPerPage ? currentIndex + recordsPerPage : upcomingEvents.length;
+
+  for(let i = currentIndex; i < stopIndex; i++) {
     let row = tableBody.insertRow(-1);
     let startCell = row.insertCell(0);
     let endCell = row.insertCell(1);
     let roomCell = row.insertCell(2);
     let eventCell = row.insertCell(3);
 
-    startCell.innerHTML = convertDate(event['start_date_time']);
-    endCell.innerHTML = convertDate(event['end_date_time']);
-    roomCell.innerHTML = event['facility_title'];
-    eventCell.innerHTML = event['event_name'];
-  });
+    startCell.innerHTML = convertDate(upcomingEvents[i]['start_date_time']);
+    endCell.innerHTML = convertDate(upcomingEvents[i]['end_date_time']);
+    roomCell.innerHTML = upcomingEvents[i]['facility_title'];
+    eventCell.innerHTML = upcomingEvents[i]['event_name'];
+  }
+  currentIndex = stopIndex;
 };
 
 let showNoUpcomingMessage = function(tableBody) {
@@ -76,10 +96,17 @@ let hideNoUpcomingMessage = function(tableBody) {
 };
 
 window.addEventListener('load', function() {
+  table = document.getElementById("event-table");
+  tableBody = table.getElementsByTagName("tbody")[0];
   getUpcomingEvents();
 });
 
 (function endlessPolling() {
   getUpcomingEvents();
-  setTimeout(endlessPolling, 5000);
+  setTimeout(endlessPolling, requestTimeout);
+}());
+
+(function endlessPaging() {
+  updateTable();
+  setTimeout(endlessPaging, pagingTimeout);
 }());
