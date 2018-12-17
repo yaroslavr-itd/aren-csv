@@ -63,13 +63,17 @@ def get_all_events():
     return ACTUAL_EVENTS
 
 
-def get_upcoming_events(timestamp=None, skip_incomplete=True):
+def get_upcoming_events(timestamp=None):
     if timestamp is None:
         timestamp = int(datetime.datetime.now().timestamp())
 
     upcoming_events = [
-        event for event in get_all_events() if event.booking_type_id == 'R' and datetime.datetime.strptime(
+        event for event in get_all_events() if datetime.datetime.strptime(
             event.start_date_time, '%Y-%m-%d %H:%M:%S') > datetime.datetime.fromtimestamp(timestamp)]
+
+    upcoming_events = [
+        event for event in upcoming_events if 'pool' not in event.facility_title.lower() or
+                                              'pool' not in event.event_name]
 
     upcoming_events.sort(key=lambda event: datetime.datetime.strptime(
         event.start_date_time, '%Y-%m-%d %H:%M:%S'))
