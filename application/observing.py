@@ -4,8 +4,8 @@ import watchdog
 import watchdog.events
 import watchdog.observers
 
-PATH_TO_OBSERVE = os.getenv('ARENCSV_PATH_TO_OBSERVE')
-FILE_NAME = os.getenv('ARENCSV_FILE_NAME')
+PATH_TO_OBSERVE = os.getenv('QEPCCC_PATH_TO_OBSERVE')
+FILE_NAME = os.getenv('QEPCCC_FILE_NAME')
 
 
 class CustomEventHandler(watchdog.events.FileSystemEventHandler):

@@ -2,7 +2,7 @@ import csv
 import datetime
 import os
 
-PATH_TO_EVENTS_FILE = os.getenv('ARENCSV_PATH_TO_EVENTS_FILE')
+PATH_TO_EVENTS_FILE = os.getenv('QEPCCC_PATH_TO_EVENTS_FILE')
 
 
 class Event:
