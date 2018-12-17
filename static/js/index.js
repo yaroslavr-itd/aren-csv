@@ -75,7 +75,8 @@ let updateTable = function() {
     startCell.innerHTML = convertDate(upcomingEvents[i]['start_date_time']);
     endCell.innerHTML = convertDate(upcomingEvents[i]['end_date_time']);
     roomCell.innerHTML = upcomingEvents[i]['facility_title'];
-    eventCell.innerHTML = upcomingEvents[i]['event_name'];
+    eventCell.innerHTML = upcomingEvents[i]['event_name'] === null || upcomingEvents[i]['event_name'] === "" ?
+                            upcomingEvents[i]['facility_title'] : upcomingEvents[i]['event_name'];
   }
   currentIndex = stopIndex;
 };
