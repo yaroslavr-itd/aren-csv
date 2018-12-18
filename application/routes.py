@@ -12,9 +12,9 @@ def index_handler():
 
 @HTTP_API_BLUEPRINT.route('/all_events', methods=['GET'])
 def all_events_handler():
-    return flask.jsonify(application.events.get_all_events())
+    return flask.jsonify(application.events.get_all_events(application.events.PATH_TO_EVENTS_FILE))
 
 
 @HTTP_API_BLUEPRINT.route('/upcoming_events', methods=['GET'])
 def upcoming_events_handler(timestamp=None):
-    return flask.jsonify(application.events.get_upcoming_events(timestamp))
+    return flask.jsonify(application.events.get_upcoming_events(application.events.PATH_TO_EVENTS_FILE, timestamp))
