@@ -18,12 +18,11 @@ body {
 }
 
 .table-row-style {
-  font-size: x-large;
+  font-size: 42px;
 }
 
 .message-style {
   color: white;
-  font-size: xx-large;
 }
 
 .table tbody td {
@@ -32,10 +31,10 @@ body {
 
 h1.thick {
   font-weight: 900;
-  font-size: 55px;
+  font-size: 65px;
 }
 
 h3.thick {
   font-weight: 900;
-  font-size: 35px;
+  font-size: 45px;
 }
