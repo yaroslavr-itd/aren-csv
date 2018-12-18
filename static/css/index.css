@@ -29,6 +29,10 @@ body {
   border: none;
 }
 
+.table thead th {
+  border-bottom: 5px solid white;
+}
+
 h1.thick {
   font-weight: 900;
   font-size: 65px;
