@@ -20,7 +20,7 @@ class CustomEventHandler(watchdog.events.FileSystemEventHandler):
     def on_modified(self, event):
         super(CustomEventHandler, self).on_modified(event)
 
-        if not isinstance(event, watchdog.events.FileModifiedEvent):
+        if not isinstance(event, (watchdog.events.FileModifiedEvent, watchdog.events.FileCreatedEvent)):
             return
 
         if not event.src_path.endswith(self.filename):
