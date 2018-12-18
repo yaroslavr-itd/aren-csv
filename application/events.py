@@ -56,19 +56,19 @@ def read_events(path):
         return []
 
 
-ACTUAL_EVENTS = read_events(PATH_TO_EVENTS_FILE)
+# ACTUAL_EVENTS = read_events(PATH_TO_EVENTS_FILE)
 
 
-def get_all_events():
-    return ACTUAL_EVENTS
+def get_all_events(path):
+    return read_events(path)
 
 
-def get_upcoming_events(timestamp=None):
+def get_upcoming_events(path, timestamp=None):
     if timestamp is None:
         timestamp = int(datetime.datetime.now().timestamp())
 
     upcoming_events = [
-        event for event in get_all_events() if datetime.datetime.strptime(
+        event for event in get_all_events(path) if datetime.datetime.strptime(
             event.end_date_time, '%Y-%m-%d %H:%M:%S') > datetime.datetime.fromtimestamp(timestamp)]
 
     upcoming_events = [

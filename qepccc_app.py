@@ -20,7 +20,7 @@ def create_app():
     flask_app.json_encoder = EventJSONEncoder
     flask_app.register_blueprint(application.routes.HTTP_API_BLUEPRINT)
 
-    application.observing.start_observer(
-        application.observing.PATH_TO_OBSERVE, application.observing.FILE_NAME, file_changed_handler)
+    # application.observing.start_observer(
+    #     application.observing.PATH_TO_OBSERVE, application.observing.FILE_NAME, file_changed_handler)
 
     return flask_app
