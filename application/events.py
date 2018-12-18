@@ -72,8 +72,8 @@ def get_upcoming_events(timestamp=None):
             event.end_date_time, '%Y-%m-%d %H:%M:%S') > datetime.datetime.fromtimestamp(timestamp)]
 
     upcoming_events = [
-        event for event in upcoming_events if 'pool' not in event.facility_title.lower() or
-                                              'pool' not in event.event_name]
+        event for event in upcoming_events if 'pool' not in event.facility_title.lower()
+                                              and 'equipment reserved' not in event.function_title.lower()]
 
     upcoming_events.sort(key=lambda event: datetime.datetime.strptime(
         event.start_date_time, '%Y-%m-%d %H:%M:%S'))
