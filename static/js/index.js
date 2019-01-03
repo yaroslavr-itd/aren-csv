@@ -28,7 +28,7 @@ let getUpcomingEvents = function() {
   httpRequest.send();
   httpRequest.onreadystatechange = function() {
     if (this.readyState === 4 && this.status === 200) {
-      upcomingEvents = JSON.parse(httpRequest.responseText);
+      upcomingEvents = JSON.parse(httpRequest.responseText)["events"];
       if (initialLoad) {
         updateTable();
         initialLoad = false;
